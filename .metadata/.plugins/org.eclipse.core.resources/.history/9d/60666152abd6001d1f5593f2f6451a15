@@ -1,0 +1,56 @@
+package com.virtualstore.servlet;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.virtualstore.conn.FactoryProvider;
+import com.virtualstore.entity.Resister;
+
+@WebServlet("/register")
+public class RegisterServlet extends HttpServlet {
+	
+	
+	
+	public RegisterServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		try {
+			String email = req.getParameter("email");
+			String pass = req.getParameter("pass");
+			
+			
+			Resister resister = new Resister(email,pass);
+			
+			System.out.println(resister);
+			
+			Session s = FactoryProvider.getFactory().openSession();
+			
+//			Transaction tx = s.beginTransaction();
+			Transaction tx = s.getTransaction();
+			
+			tx.begin();
+			
+			s.save(resister);
+			
+			tx.commit();
+			
+			s.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+}

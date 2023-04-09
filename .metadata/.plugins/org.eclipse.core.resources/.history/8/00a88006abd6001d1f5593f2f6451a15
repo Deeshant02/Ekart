@@ -1,0 +1,50 @@
+package com.virtualstore.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "resister")
+public class Resister {
+	@Id
+	@Column(length = 500)
+	private String email;
+	@Column(length = 500)
+	private String pass;
+	
+	
+	
+	public Resister(String email, String pass) {
+		super();
+		this.email = email;
+		this.pass = pass;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
+	@Override
+	public String toString() {
+		return "Create [email=" + email + ", pass=" + pass + "]";
+	}
+
+	public Resister() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+}

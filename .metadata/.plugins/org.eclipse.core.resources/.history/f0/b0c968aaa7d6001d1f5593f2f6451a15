@@ -1,0 +1,54 @@
+package com.dishant.servlet;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.dishant.dao.CreateDao;
+import com.dishant.entity.Create;
+import com.virtualstore.conn.FactoryProvider;
+
+@WebServlet("/register")
+public class RegisterServlet extends HttpServlet {
+	
+	
+	
+	public RegisterServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		try {
+			String email = req.getParameter("email");
+			String pass = req.getParameter("pass");
+			
+			
+			Create create = new Create(email,pass);
+			
+			System.out.println(create);
+			
+			Session s = FactoryProvider.getFactory().openSession();
+			
+			Transaction tx = s.beginTransaction();
+			
+			s.save(create);
+			
+			tx.commit();
+			
+			s.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+}
